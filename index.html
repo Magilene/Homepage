@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KaneIntel — AI Automation & Web Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --transition: 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  [data-theme="dark"] {
+    --bg: #080c12;
+    --bg2: #0e1420;
+    --bg3: #131c2b;
+    --card: #111827;
+    --card-border: rgba(59,130,246,0.15);
+    --text: #fef3e2;
+    --text-muted: #b0948a;
+    --text-faint: #5a3d2b;
+    --accent: #3b82f6;
+    --accent2: #06b6d4;
+    --accent-glow: rgba(59,130,246,0.28);
+    --nav-bg: rgba(8,12,18,0.88);
+    --hero-overlay: linear-gradient(135deg, rgba(8,12,18,0.92) 0%, rgba(40,14,4,0.8) 100%);
+    --toggle-bg: #1e293b;
+    --toggle-knob: #3b82f6;
+    --footer-bg: #05080f;
+    --tag-bg: rgba(59,130,246,0.12);
+    --tag-text: #60a5fa;
+    --quote-border: #3b82f6;
+    --section-alt: #0b0e14;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8fafc;
+    --bg2: #ffffff;
+    --bg3: #f1f5f9;
+    --card: #ffffff;
+    --card-border: rgba(37,99,235,0.12);
+    --text: #0f172a;
+    --text-muted: #475569;
+    --text-faint: #94a3b8;
+    --accent: #2563eb;
+    --accent2: #0891b2;
+    --accent-glow: rgba(37,99,235,0.15);
+    --nav-bg: rgba(255,255,255,0.92);
+    --hero-overlay: linear-gradient(135deg, rgba(15,23,42,0.82) 0%, rgba(30,58,138,0.7) 100%);
+    --toggle-bg: #e2e8f0;
+    --toggle-knob: #2563eb;
+    --footer-bg: #0f172a;
+    --tag-bg: rgba(37,99,235,0.08);
+    --tag-text: #2563eb;
+    --quote-border: #2563eb;
+    --section-alt: #f1f5f9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background var(--transition), color var(--transition);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 5%;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--card-border);
+    transition: background var(--transition), border-color var(--transition);
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+
+  .logo-wordmark {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+    color: white;
+  }
+
+  [data-theme="light"] .logo-wordmark {
+    color: #0f172a;
+  }
+
+  .logo-mark {
+    width: 36px; height: 36px;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+
+  .logo-mark svg { width: 36px; height: 36px; }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: #f97316;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: #fbbf24; }
+
+  [data-theme="light"] .nav-links a {
+    color: #ea580c;
+    font-weight: 600;
+  }
+
+  [data-theme="light"] .nav-links a:hover { color: #c2410c; }
+
+  .nav-cta {
+    background: linear-gradient(135deg, #f97316, #ea580c) !important;
+    color: white !important;
+    padding: 0.5rem 1.25rem !important;
+    border-radius: 8px;
+    font-weight: 600 !important;
+    transition: opacity 0.2s !important;
+  }
+
+  .nav-cta:hover { opacity: 0.88; }
+
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+
+  /* THEME TOGGLE */
+  .theme-toggle {
+    display: flex; align-items: center; gap: 0.5rem;
+    cursor: pointer;
+    background: var(--toggle-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 50px;
+    padding: 4px;
+    transition: background var(--transition);
+  }
+
+  .toggle-option {
+    display: flex; align-items: center; justify-content: center;
+    width: 30px; height: 26px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    transition: background 0.25s, transform 0.25s;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  [data-theme="dark"] .toggle-dark { background: var(--accent); }
+  [data-theme="dark"] .toggle-light { background: transparent; }
+  [data-theme="light"] .toggle-light { background: #f59e0b; }
+  [data-theme="light"] .toggle-dark { background: transparent; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 0 5%;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: var(--bg);
+    transition: background var(--transition);
+  }
+
+  /* Subtle grid overlay */
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--card-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--card-border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.35;
+  }
+
+  /* Accent glow orbs */
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .hero-orb-1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    top: -10%; right: 5%;
+  }
+
+  .hero-orb-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%);
+    bottom: 10%; left: -5%;
+  }
+
+  .hero-sand  { display: none; }
+  .hero-palm-l { display: none; }
+  .hero-palm-r { display: none; }
+  .hero-scene { display: none; }
+
+  .hero-inner {
+    position: relative; z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding-top: 10rem;
+    padding-bottom: 3rem;
+    gap: 0;
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.1rem, 2vw, 1.6rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 2rem;
+    color: var(--text);
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+
+  .hero-title .gradient-text {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-visual-panel {
+    position: relative; z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .hero-visual-panel svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 20px 60px rgba(59,130,246,0.25));
+  }
+
+  .hero-cta-btn {
+    margin-top: 2.5rem;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    border: 1px solid var(--card-border);
+    border-radius: 50px;
+    padding: 0.35rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 1.5s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.6rem, 3.5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+
+  .hero h1 .gradient-text {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 540px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.8rem 1.8rem;
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(249,115,22,0.35);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(249,115,22,0.45);
+  }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.8rem 1.8rem;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    background: var(--card);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--accent); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    animation: fadeUp 0.7s 0.4s ease both;
+    padding-top: 2rem;
+    border-top: 1px solid var(--card-border);
+  }
+
+  .stat strong {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 5%;
+  }
+
+  .section-alt { background: var(--section-alt); transition: background var(--transition); }
+
+  .section-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 3.5rem;
+  }
+
+  /* ── SERVICES GRID ── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s, background var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .service-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px var(--accent-glow);
+  }
+
+  .service-card:hover::before { opacity: 1; }
+
+  .service-icon {
+    width: 48px; height: 48px;
+    background: var(--tag-bg);
+    border-radius: 12px;
+    display: grid; place-items: center;
+    margin-bottom: 1.25rem;
+    font-size: 1.4rem;
+  }
+
+  .service-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .service-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  .service-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+  }
+
+  .tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s, background var(--transition);
+    cursor: pointer;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px var(--accent-glow);
+  }
+
+  .project-thumb {
+    height: 180px;
+    background: linear-gradient(135deg, var(--bg3), var(--bg2));
+    display: grid;
+    place-items: center;
+    font-size: 2.5rem;
+    transition: background var(--transition);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .project-info { padding: 1.25rem; }
+
+  .project-info h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .project-info p {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+  }
+
+  .project-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 5px;
+    margin-top: 0.6rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .badge-live { background: rgba(16,185,129,0.12); color: #10b981; }
+  .badge-soon { background: rgba(245,158,11,0.12); color: #f97316; }
+
+  /* ── WHY US (redesigned) ── */
+  .why-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 3.5rem;
+  }
+
+  .why-main-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+
+  .why-intro {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .why-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .why-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: border-color 0.25s, transform 0.25s, background var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .why-card:hover {
+    border-color: #f97316;
+    transform: translateY(-4px);
+  }
+
+  .why-card-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .why-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #f97316;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .why-card-body {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.75;
+    flex: 1;
+  }
+
+  @media (max-width: 900px) {
+    .why-cards { grid-template-columns: 1fr; }
+  }
+
+  /* ── END WHY US ── */
+
+  /* ── HOW WE WORK VIDEO ── */
+  .why-video-wrap {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .why-video-label {
+    text-align: left;
+    max-width: 100%;
+    align-self: flex-start;
+    width: 100%;
+  }
+
+  .why-video-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 700;
+    color: var(--text);
+    margin: 0.5rem 0 0.75rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .why-video-sub {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .why-video-player {
+    width: 100vw;
+    margin-left: calc(-5%);
+    background: #0a0f1a;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid rgba(59,130,246,0.25);
+    border-bottom: 1px solid rgba(59,130,246,0.25);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 60px rgba(249,115,22,0.08);
+  }
+
+  .why-video-steps {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem 1.25rem;
+    padding: 0.85rem 1.5rem;
+    border-top: 1px solid rgba(249,115,22,0.1);
+    background: #060c18;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .vstep {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #8b9ab5;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .vdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .why-video-wrap { flex-direction: column; }
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-left: 3px solid var(--quote-border);
+    border-radius: 14px;
+    padding: 1.75rem;
+    transition: background var(--transition), border-color var(--transition);
+  }
+
+  .testimonial-card .stars { color: #f97316; margin-bottom: 0.75rem; font-size: 0.9rem; }
+  .testimonial-card p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.25rem; font-style: italic; }
+
+  .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+
+  .author-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: grid; place-items: center;
+    font-weight: 700;
+    color: white;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .author-info strong { display: block; font-size: 0.88rem; font-weight: 600; }
+  .author-info span { font-size: 0.78rem; color: var(--text-muted); }
+
+  /* ── CONTACT ── */
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+  label { font-size: 0.83rem; font-weight: 600; color: var(--text-muted); }
+
+  input, textarea, select {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s, background var(--transition), color var(--transition);
+    width: 100%;
+  }
+
+  textarea { resize: vertical; min-height: 130px; }
+
+  input:focus, textarea:focus { border-color: var(--accent); }
+
+  .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .contact-item {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+    transition: background var(--transition);
+  }
+
+  .contact-item-icon {
+    width: 42px; height: 42px; flex-shrink: 0;
+    background: var(--tag-bg);
+    border-radius: 10px;
+    display: grid; place-items: center;
+    font-size: 1.2rem;
+  }
+
+  .contact-item h4 { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+  .contact-item p { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--footer-bg);
+    color: #8b9ab5;
+    padding: 3.5rem 5% 2rem;
+    transition: background var(--transition);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: white;
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 1rem;
+    text-decoration: none;
+  }
+
+  .footer-desc { font-size: 0.88rem; line-height: 1.7; max-width: 280px; margin-bottom: 1.5rem; }
+
+  .footer-social { display: flex; gap: 0.75rem; }
+
+  .social-btn {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: grid; place-items: center;
+    color: #8b9ab5;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .social-btn:hover { background: var(--accent); color: white; }
+
+  .footer-col h5 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    color: white;
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.03em;
+  }
+
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+
+  .footer-links a {
+    color: #8b9ab5;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: white; }
+
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+    font-size: 0.82rem;
+  }
+
+  .footer-bottom a { color: #8b9ab5; text-decoration: none; transition: color 0.2s; }
+  .footer-bottom a:hover { color: white; }
+
+  /* ── RESPONSIVE ── */
+  /* ── MOBILE & TABLET RESPONSIVE ── */
+
+  /* Tablet: 481px–900px */
+  @media (max-width: 900px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-cards { grid-template-columns: repeat(2, 1fr); }
+    .contact-wrap { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  }
+
+  /* Mobile: up to 480px */
+  @media (max-width: 768px) {
+    /* Nav */
+    .nav-links { display: none !important; }
+    .hamburger { display: block; }
+
+    /* Hero */
+    .hero { padding: 0 4%; }
+    .hero-inner { padding-top: 8rem; }
+    .hero-title { font-size: 1.3rem; }
+    .hero-visual-panel { max-width: 320px; }
+    .hero-cta-btn { font-size: 0.9rem; padding: 0.75rem 1.5rem; }
+
+    /* Nowrap texts — allow wrapping on mobile */
+    .section-sub {
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: unset !important;
+    }
+
+    /* Sections */
+    section { padding: 4rem 4%; }
+    .section-heading { font-size: 1.5rem; }
+
+    /* Services */
+    .services-grid { grid-template-columns: 1fr; }
+
+    /* Projects */
+    .projects-grid { grid-template-columns: 1fr; }
+
+    /* Why cards */
+    .why-cards { grid-template-columns: 1fr; }
+    .why-main-heading { font-size: 1.2rem; }
+
+    /* Testimonials */
+    .testimonials-grid { grid-template-columns: 1fr; }
+
+    /* Contact */
+    .contact-wrap { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-info { gap: 1rem; }
+
+    /* Footer */
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; text-align: center; gap: 0.75rem; }
+    .footer-desc { max-width: 100%; }
+
+    /* Legal sections */
+    #terms, #privacy, #cookies { padding: 3rem 4% !important; }
+  }
+
+  @media (max-width: 400px) {
+    .hero-title { font-size: 1.1rem; }
+    .hero-visual-panel svg { max-width: 260px; }
+    nav { padding: 0.85rem 4%; }
+  }
+
+  @media (min-width: 769px) {
+    .section-sub.nowrap {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  /* Mobile touch improvements */
+  * { -webkit-tap-highlight-color: transparent; }
+  .btn-primary, .btn-secondary, .hero-cta-btn,
+  .service-card, .project-card, .why-card,
+  .theme-toggle, .hamburger, .mobile-link, .social-btn {
+    touch-action: manipulation;
+  }
+  input, textarea, select { font-size: 16px; } /* Prevent iOS zoom on focus */
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── HAMBURGER & MOBILE MENU ── */
+  .hamburger {
+    display: none;
+    background: none;
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    font-size: 1.2rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    order: -1;
+  }
+  .hamburger:hover { background: var(--card); }
+
+  .mobile-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: var(--bg);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+  .mobile-overlay.open { display: flex; }
+
+  .mobile-close {
+    position: absolute; top: 1.5rem; right: 5%;
+    background: none; border: none;
+    color: var(--text); font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .mobile-links {
+    list-style: none;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0.5rem;
+    width: 100%;
+    padding: 0 5%;
+  }
+
+  .mobile-link {
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    width: 100%;
+    text-align: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .mobile-link:hover { background: var(--tag-bg); color: var(--accent); }
+
+  @media (max-width: 768px) {
+    .hamburger { display: block; }
+    .nav-links { display: none !important; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="javascript:void(0)" data-target="hero">
+    <div class="logo-mark" style="width:48px;height:48px;">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:48px;height:48px;">
+        <defs>
+          <linearGradient id="iGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#f5a623"/>
+            <stop offset="100%" stop-color="#e07b00"/>
+          </linearGradient>
+          <linearGradient id="kBlue" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"   stop-color="#4a90e2"/>
+            <stop offset="100%" stop-color="#1e5bbf"/>
+          </linearGradient>
+        </defs>
+        <!-- Dark circle background -->
+        <circle cx="50" cy="50" r="48" fill="#0d1b2e" opacity="0.6"/>
+
+        <!-- K — white vertical stem -->
+        <rect x="14" y="15" width="14" height="70" rx="2" fill="white"/>
+        <!-- K — upper blue arm (diagonal, top-right) -->
+        <polygon points="28,50 68,15 80,15 40,50" fill="url(#kBlue)"/>
+        <!-- K — lower blue arm (diagonal, bottom-right) -->
+        <polygon points="28,50 68,85 80,85 40,50" fill="url(#kBlue)"/>
+
+        <!-- i — orange rounded rectangle body -->
+        <rect x="62" y="28" width="14" height="52" rx="4" fill="url(#iGrad)"/>
+        <!-- i — pointed bottom tip -->
+        <polygon points="62,76 76,76 69,88" fill="#e07b00"/>
+        <!-- i — orange dot on top -->
+        <circle cx="69" cy="18" r="8" fill="#4a90e2"/>
+        <!-- i — blue colon dots (between K and i) -->
+        <circle cx="56" cy="38" r="3" fill="#4a90e2"/>
+        <circle cx="56" cy="54" r="3" fill="#e07b00"/>
+      </svg>
+    </div>
+    <span class="logo-wordmark">Kane<span style="color:#4a90e2;">Intel</span></span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="javascript:void(0)" data-target="services">Services</a></li>
+    <li><a href="javascript:void(0)" data-target="projects">Projects</a></li>
+    <li><a href="javascript:void(0)" data-target="why-us">Why Us</a></li>
+    <li><a href="javascript:void(0)" data-target="testimonials">Testimonials</a></li>
+    <li><a class="nav-cta" href="javascript:void(0)" data-target="contact">Get Started</a></li>
+  </ul>
+
+  <button class="hamburger" id="hamburger" aria-label="Open menu">☰</button>
+  <div class="nav-right">
+    <div class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <div class="toggle-option toggle-dark" id="darkBtn">🌙</div>
+      <div class="toggle-option toggle-light" id="lightBtn">☀️</div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-grid"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-sand"></div>
+  <div class="hero-palm-l"></div>
+  <div class="hero-palm-r"></div>
+
+  <div class="hero-inner">
+    <h1 class="hero-title">
+      We Build Intelligent Solutions Tailored to<br/>
+      <span class="gradient-text">Your Business</span>
+    </h1>
+
+    <!-- HERO ILLUSTRATION -->
+    <div class="hero-visual-panel">
+      <svg viewBox="0 0 500 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1"/>
+          </linearGradient>
+          <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#1e3a5f;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#0f2544;stop-opacity:1"/>
+          </linearGradient>
+          <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="softglow">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Background glow orbs -->
+        <circle cx="380" cy="100" r="120" fill="#3b82f6" opacity="0.06"/>
+        <circle cx="120" cy="380" r="100" fill="#06b6d4" opacity="0.07"/>
+
+        <!-- Central AI Brain / Network Hub -->
+        <circle cx="250" cy="220" r="70" fill="url(#grad2)" stroke="url(#grad1)" stroke-width="2" opacity="0.95"/>
+        <!-- Brain circuit lines -->
+        <circle cx="250" cy="220" r="48" fill="none" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
+        <circle cx="250" cy="220" r="28" fill="#0e1f3d" stroke="url(#grad1)" stroke-width="1.5"/>
+        <!-- AI chip icon in center -->
+        <rect x="235" y="205" width="30" height="30" rx="4" fill="url(#grad1)" opacity="0.9"/>
+        <rect x="241" y="211" width="18" height="18" rx="2" fill="#0a1628"/>
+        <line x1="235" y1="213" x2="228" y2="213" stroke="#3b82f6" stroke-width="1.5"/>
+        <line x1="235" y1="220" x2="228" y2="220" stroke="#3b82f6" stroke-width="1.5"/>
+        <line x1="235" y1="227" x2="228" y2="227" stroke="#3b82f6" stroke-width="1.5"/>
+        <line x1="265" y1="213" x2="272" y2="213" stroke="#3b82f6" stroke-width="1.5"/>
+        <line x1="265" y1="220" x2="272" y2="220" stroke="#3b82f6" stroke-width="1.5"/>
+        <line x1="265" y1="227" x2="272" y2="227" stroke="#3b82f6" stroke-width="1.5"/>
+        <line x1="243" y1="205" x2="243" y2="198" stroke="#3b82f6" stroke-width="1.5"/>
+        <line x1="250" y1="205" x2="250" y2="198" stroke="#3b82f6" stroke-width="1.5"/>
+        <line x1="257" y1="205" x2="257" y2="198" stroke="#3b82f6" stroke-width="1.5"/>
+        <line x1="243" y1="235" x2="243" y2="242" stroke="#3b82f6" stroke-width="1.5"/>
+        <line x1="250" y1="235" x2="250" y2="242" stroke="#3b82f6" stroke-width="1.5"/>
+        <line x1="257" y1="235" x2="257" y2="242" stroke="#3b82f6" stroke-width="1.5"/>
+        <!-- Inner chip grid -->
+        <rect x="244" y="214" width="4" height="4" rx="1" fill="#3b82f6"/>
+        <rect x="251" y="214" width="4" height="4" rx="1" fill="#06b6d4"/>
+        <rect x="244" y="221" width="4" height="4" rx="1" fill="#06b6d4"/>
+        <rect x="251" y="221" width="4" height="4" rx="1" fill="#3b82f6"/>
+
+        <!-- Connection lines from hub to service nodes -->
+        <!-- Top-left: Web Dev -->
+        <line x1="195" y1="170" x2="120" y2="100" stroke="url(#grad3)" stroke-width="1.5" opacity="0.7"/>
+        <!-- Top-right: Automation -->
+        <line x1="305" y1="170" x2="380" y2="100" stroke="url(#grad3)" stroke-width="1.5" opacity="0.7"/>
+        <!-- Left: AI Copilot -->
+        <line x1="182" y1="220" x2="80" y2="220" stroke="url(#grad3)" stroke-width="1.5" opacity="0.7"/>
+        <!-- Right: Analytics -->
+        <line x1="318" y1="220" x2="420" y2="220" stroke="url(#grad3)" stroke-width="1.5" opacity="0.7"/>
+        <!-- Bottom-left: Copywriting -->
+        <line x1="195" y1="270" x2="120" y2="340" stroke="url(#grad3)" stroke-width="1.5" opacity="0.7"/>
+        <!-- Bottom-right: Security -->
+        <line x1="305" y1="270" x2="380" y2="340" stroke="url(#grad3)" stroke-width="1.5" opacity="0.7"/>
+        <!-- Bottom: Client -->
+        <line x1="250" y1="290" x2="250" y2="390" stroke="url(#grad3)" stroke-width="1.5" opacity="0.7"/>
+
+        <!-- Animated pulse dots on lines -->
+        <circle cx="157" cy="135" r="3" fill="#3b82f6" filter="url(#glow)" opacity="0.9">
+          <animate attributeName="opacity" values="0.9;0.2;0.9" dur="2.1s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="342" cy="135" r="3" fill="#06b6d4" filter="url(#glow)" opacity="0.9">
+          <animate attributeName="opacity" values="0.2;0.9;0.2" dur="1.8s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="131" cy="220" r="3" fill="#3b82f6" filter="url(#glow)">
+          <animate attributeName="opacity" values="0.9;0.2;0.9" dur="2.4s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="369" cy="220" r="3" fill="#06b6d4" filter="url(#glow)">
+          <animate attributeName="opacity" values="0.2;0.9;0.2" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="157" cy="305" r="3" fill="#3b82f6" filter="url(#glow)">
+          <animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.6s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="342" cy="305" r="3" fill="#06b6d4" filter="url(#glow)">
+          <animate attributeName="opacity" values="0.2;0.9;0.2" dur="2.2s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- SERVICE NODE: Web Dev (top-left) -->
+        <rect x="65" y="60" width="110" height="80" rx="14" fill="url(#grad2)" stroke="#3b82f6" stroke-width="1.5"/>
+        <rect x="78" y="72" width="84" height="12" rx="3" fill="#3b82f6" opacity="0.3"/>
+        <rect x="78" y="90" width="55" height="8" rx="2" fill="#3b82f6" opacity="0.2"/>
+        <rect x="78" y="103" width="68" height="8" rx="2" fill="#06b6d4" opacity="0.2"/>
+        <rect x="78" y="116" width="40" height="8" rx="2" fill="#3b82f6" opacity="0.2"/>
+        <!-- browser dots -->
+        <circle cx="82" cy="78" r="3" fill="#ef4444" opacity="0.8"/>
+        <circle cx="92" cy="78" r="3" fill="#f59e0b" opacity="0.8"/>
+        <circle cx="102" cy="78" r="3" fill="#10b981" opacity="0.8"/>
+        <text x="120" y="151" fill="#60a5fa" font-family="sans-serif" font-size="9" font-weight="600" text-anchor="middle">Web &amp; App Dev</text>
+
+        <!-- SERVICE NODE: Automation (top-right) -->
+        <rect x="325" y="60" width="110" height="80" rx="14" fill="url(#grad2)" stroke="#f97316" stroke-width="1.5"/>
+        <!-- Gear icon -->
+        <circle cx="380" cy="93" r="16" fill="none" stroke="#f97316" stroke-width="2"/>
+        <circle cx="380" cy="93" r="7" fill="#06b6d4" opacity="0.4"/>
+        <rect x="377" y="73" width="6" height="8" rx="2" fill="#06b6d4" opacity="0.8"/>
+        <rect x="377" y="105" width="6" height="8" rx="2" fill="#06b6d4" opacity="0.8"/>
+        <rect x="357" y="90" width="8" height="6" rx="2" fill="#06b6d4" opacity="0.8"/>
+        <rect x="395" y="90" width="8" height="6" rx="2" fill="#06b6d4" opacity="0.8"/>
+        <rect x="362" y="78" width="7" height="7" rx="2" fill="#06b6d4" opacity="0.6" transform="rotate(45 365 81)"/>
+        <rect x="391" y="101" width="7" height="7" rx="2" fill="#06b6d4" opacity="0.6" transform="rotate(45 394 104)"/>
+        <text x="380" y="151" fill="#f97316" font-family="sans-serif" font-size="9" font-weight="700" text-anchor="middle">Automation</text>
+
+        <!-- SERVICE NODE: AI Copilot (left) -->
+        <rect x="18" y="183" width="104" height="74" rx="14" fill="url(#grad2)" stroke="#3b82f6" stroke-width="1.5"/>
+        <!-- Chat bubbles -->
+        <rect x="30" y="196" width="55" height="16" rx="8" fill="#3b82f6" opacity="0.5"/>
+        <rect x="46" y="218" width="55" height="16" rx="8" fill="#06b6d4" opacity="0.4"/>
+        <circle cx="35" cy="204" r="3" fill="white" opacity="0.8"/>
+        <circle cx="44" cy="204" r="3" fill="white" opacity="0.8"/>
+        <circle cx="53" cy="204" r="3" fill="white" opacity="0.8"/>
+        <text x="70" y="267" fill="#60a5fa" font-family="sans-serif" font-size="9" font-weight="600" text-anchor="middle">AI Copilot</text>
+
+        <!-- SERVICE NODE: Analytics (right) -->
+        <rect x="378" y="183" width="104" height="74" rx="14" fill="url(#grad2)" stroke="#f97316" stroke-width="1.5"/>
+        <!-- Bar chart -->
+        <rect x="393" y="226" width="10" height="20" rx="2" fill="#3b82f6" opacity="0.7"/>
+        <rect x="408" y="214" width="10" height="32" rx="2" fill="#06b6d4" opacity="0.8"/>
+        <rect x="423" y="208" width="10" height="38" rx="2" fill="#3b82f6" opacity="0.9"/>
+        <rect x="438" y="218" width="10" height="28" rx="2" fill="#06b6d4" opacity="0.7"/>
+        <line x1="390" y1="248" x2="455" y2="248" stroke="#3b82f6" stroke-width="1" opacity="0.4"/>
+        <text x="430" y="267" fill="#f97316" font-family="sans-serif" font-size="9" font-weight="700" text-anchor="middle">Analytics</text>
+
+        <!-- SERVICE NODE: Copywriting (bottom-left) -->
+        <rect x="65" y="300" width="110" height="80" rx="14" fill="url(#grad2)" stroke="#3b82f6" stroke-width="1.5"/>
+        <line x1="80" y1="320" x2="162" y2="320" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <line x1="80" y1="330" x2="148" y2="330" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+        <line x1="80" y1="340" x2="155" y2="340" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <line x1="80" y1="350" x2="135" y2="350" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+        <line x1="80" y1="360" x2="150" y2="360" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+        <text x="120" y="390" fill="#60a5fa" font-family="sans-serif" font-size="9" font-weight="600" text-anchor="middle">Copywriting</text>
+
+        <!-- SERVICE NODE: Security (bottom-right) -->
+        <rect x="325" y="300" width="110" height="80" rx="14" fill="url(#grad2)" stroke="#f97316" stroke-width="1.5"/>
+        <!-- Shield icon -->
+        <path d="M380 316 L400 323 L400 345 Q400 358 380 365 Q360 358 360 345 L360 323 Z" fill="none" stroke="#f97316" stroke-width="2" opacity="0.8"/>
+        <path d="M380 318 L397 324 L397 345 Q397 356 380 362 Q363 356 363 345 L363 324 Z" fill="#3b82f6" opacity="0.1"/>
+        <path d="M372 340 L378 346 L389 333" stroke="#f97316" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="380" y="390" fill="#f97316" font-family="sans-serif" font-size="9" font-weight="700" text-anchor="middle">Cybersecurity</text>
+
+        <!-- CLIENT RESULT node (bottom center) -->
+        <rect x="195" y="390" width="110" height="68" rx="14" fill="url(#grad1)" opacity="0.15" stroke="url(#grad1)" stroke-width="1.5"/>
+        <text x="250" y="418" fill="#60a5fa" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle">Your Business</text>
+        <text x="250" y="433" fill="#22d3ee" font-family="sans-serif" font-size="8" text-anchor="middle">Growth · Efficiency · Scale</text>
+        <!-- upward arrow to hub -->
+        <path d="M250 390 L250 295" stroke="url(#grad3)" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6"/>
+        <polygon points="250,288 245,298 255,298" fill="#3b82f6" opacity="0.8"/>
+
+        <!-- Floating data particles -->
+        <circle cx="165" cy="190" r="2.5" fill="#3b82f6" opacity="0.6">
+          <animate attributeName="cy" values="190;180;190" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="335" cy="250" r="2" fill="#06b6d4" opacity="0.7">
+          <animate attributeName="cy" values="250;240;250" dur="2.5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.7;1;0.7" dur="2.5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="200" cy="310" r="2" fill="#3b82f6" opacity="0.5">
+          <animate attributeName="cy" values="310;300;310" dur="3.5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="300" cy="160" r="2.5" fill="#06b6d4" opacity="0.6">
+          <animate attributeName="cy" values="160;150;160" dur="2.8s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+    </div>
+    <a href="javascript:void(0)" data-target="contact" class="btn-primary hero-cta-btn">
+      Get Started →
+    </a>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section-alt">
+  <div class="reveal">
+    <h2 class="section-heading" style="text-align:center;">Our Services</h2>
+    <p class="section-sub nowrap" style="max-width:100%;">We help SMB businesses save hours every week and cut costs. Empowering your team to focus on what matters most — through intelligent automation and AI.</p>
+  </div>
+
+  <div class="services-grid">
+
+    <div class="service-card reveal">
+      <div class="service-icon">🌐</div>
+      <h3>Web & App Development</h3>
+      <p>From sleek websites to powerful applications, we build digital platforms that don't just look great — they work seamlessly for your business and scale with you.</p>
+      <div class="service-tags">
+        <span class="tag">Full-Stack</span>
+        <span class="tag">iOS & Android</span>
+        <span class="tag">AI-Powered</span>
+        <span class="tag">Responsive</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">⚡</div>
+      <h3>Workflow Automation</h3>
+      <p>Repetitive admin, scheduling, and reporting shouldn't eat your team's time. We design automations that handle day-to-day tasks — giving you hours back every week.</p>
+      <div class="service-tags">
+        <span class="tag">Process Mapping</span>
+        <span class="tag">AI Decision</span>
+        <span class="tag">API Integration</span>
+        <span class="tag">Monitoring</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">🤖</div>
+      <h3>AI Copilots & Assistants</h3>
+      <p>From chatbots that answer customers 24/7 to voice agents that manage calls, we create intelligent assistants tailored to your exact business needs.</p>
+      <div class="service-tags">
+        <span class="tag">NLP</span>
+        <span class="tag">Multi-language</span>
+        <span class="tag">CRM Integration</span>
+        <span class="tag">Learning AI</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">✍️</div>
+      <h3>Copywriting</h3>
+      <p>Great content drives engagement, leads, and sales. We deliver high-impact copy for websites, SEO, blogs, social media, and email — using human creativity and AI.</p>
+      <div class="service-tags">
+        <span class="tag">Content Strategy</span>
+        <span class="tag">SEO</span>
+        <span class="tag">Brand Voice</span>
+        <span class="tag">Conversion</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">📊</div>
+      <h3>Data Analytics</h3>
+      <p>Turn data into decisions. We help you collect, analyse, and visualise your business data so you can spot trends early and plan with confidence.</p>
+      <div class="service-tags">
+        <span class="tag">Predictive</span>
+        <span class="tag">Dashboards</span>
+        <span class="tag">Custom Reports</span>
+        <span class="tag">Visualisation</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">🔒</div>
+      <h3>Cybersecurity</h3>
+      <p>Protecting your business is just as important as growing it. We secure your systems against threats with proactive monitoring and robust security measures.</p>
+      <div class="service-tags">
+        <span class="tag">ISO 27001</span>
+        <span class="tag">Gap Analysis</span>
+        <span class="tag">Risk Assessment</span>
+        <span class="tag">Threat Protection</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal">
+    <span class="section-label">Portfolio</span>
+    <h2 class="section-heading">Recent Projects</h2>
+    <p class="section-sub nowrap" style="max-width:100%;">A selection of businesses we've helped grow through design, development, and intelligent automation.</p>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-thumb">🧖</div>
+      <div class="project-info">
+        <h4>Serenity Luxe Spa</h4>
+        <p>Full rebrand and booking platform with AI-powered appointment scheduling, loyalty rewards, and automated client follow-up workflows.</p>
+        <span class="project-badge badge-live">Live</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb">❄️</div>
+      <div class="project-info">
+        <h4>PureAir HVAC Solutions</h4>
+        <p>Custom service management platform with real-time job dispatch, automated maintenance reminders, and client communication automation.</p>
+        <span class="project-badge badge-live">Live</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb">✂️</div>
+      <div class="project-info">
+        <h4>Élite Cuts Salon</h4>
+        <p>Modern booking site with AI stylist recommendations, automated SMS reminders, and a digital portfolio showcasing stylist work.</p>
+        <span class="project-badge badge-live">Live</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb">🏠</div>
+      <div class="project-info">
+        <h4>Pinnacle Realty Group</h4>
+        <p>Full-stack real estate platform with AI-powered property matching, automated lead nurturing, and integrated CRM for agent workflows.</p>
+        <span class="project-badge badge-live">Live</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why-us" class="section-alt">
+
+  <!-- ANIMATED EXPLAINER VIDEO -->
+  <div class="why-video-wrap reveal">
+    <div class="why-video-label">
+      <span class="section-label">How We Work</span>
+      <h3 class="why-video-title">Guiding Your Business From Challenge to Innovation</h3>
+      <p class="why-video-sub">We walk alongside every partner — diagnosing your operations, mapping the right tools, and delivering resilient solutions built for long-term growth.</p>
+    </div>
+    <div class="why-video-player">
+      <svg id="whyVideo" viewBox="0 0 860 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;">
+        <defs>
+          <linearGradient id="vBg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0a0f1a"/>
+            <stop offset="100%" stop-color="#0f1e35"/>
+          </linearGradient>
+          <linearGradient id="vOrange" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#e0f2fe"/>
+            <stop offset="100%" stop-color="#bae6fd"/>
+          </linearGradient>
+          <linearGradient id="vBlue" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#4a90e2"/>
+            <stop offset="100%" stop-color="#60a5fa"/>
+          </linearGradient>
+          <linearGradient id="vGreen" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#10b981"/>
+            <stop offset="100%" stop-color="#34d399"/>
+          </linearGradient>
+          <filter id="vGlow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="vSoftGlow">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <marker id="arrowO" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 Z" fill="#38bdf8"/>
+          </marker>
+          <marker id="arrowB" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 Z" fill="#4a90e2"/>
+          </marker>
+          <marker id="arrowG" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 Z" fill="#10b981"/>
+          </marker>
+        </defs>
+
+        <!-- Background -->
+        <rect width="860" height="420" fill="url(#vBg)" rx="16"/>
+
+        <!-- Subtle grid -->
+        <g opacity="0.06" stroke="#3b82f6" stroke-width="0.5">
+          <line x1="0" y1="70"  x2="860" y2="70"/>
+          <line x1="0" y1="140" x2="860" y2="140"/>
+          <line x1="0" y1="210" x2="860" y2="210"/>
+          <line x1="0" y1="280" x2="860" y2="280"/>
+          <line x1="0" y1="350" x2="860" y2="350"/>
+          <line x1="172" y1="0" x2="172" y2="420"/>
+          <line x1="344" y1="0" x2="344" y2="420"/>
+          <line x1="516" y1="0" x2="516" y2="420"/>
+          <line x1="688" y1="0" x2="688" y2="420"/>
+        </g>
+
+        <!-- STEP 1: Your Business -->
+        <circle cx="100" cy="210" r="52" fill="#38bdf8" opacity="0.08" filter="url(#vSoftGlow)">
+          <animate attributeName="r" values="52;60;52" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.08;0.15;0.08" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="100" cy="210" r="42" fill="#111827" stroke="#3b82f6" stroke-width="2"/>
+        <rect x="88" y="198" width="24" height="20" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.8"/>
+        <circle cx="100" cy="193" r="6" fill="none" stroke="#3b82f6" stroke-width="1.8"/>
+        <line x1="88" y1="218" x2="88" y2="226" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="112" y1="218" x2="112" y2="226" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="100" cy="210" r="4" fill="#38bdf8" opacity="0.9">
+          <animate attributeName="r" values="4;7;4" dur="1.8s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.9;0.3;0.9" dur="1.8s" repeatCount="indefinite"/>
+        </circle>
+        <text x="100" y="268" fill="#38bdf8" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">YOUR BUSINESS</text>
+        <text x="100" y="283" fill="#8b9ab5" font-family="sans-serif" font-size="9.5" text-anchor="middle">Challenges &amp; Goals</text>
+        <text x="100" y="160" fill="#38bdf8" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle" opacity="0.6">01</text>
+
+        <!-- Arrow 1→2 -->
+        <line x1="148" y1="210" x2="210" y2="210" stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrowO)">
+          <animate attributeName="stroke-dashoffset" values="0;-16" dur="0.8s" repeatCount="indefinite"/>
+        </line>
+
+        <!-- STEP 2: Discovery -->
+        <circle cx="258" cy="210" r="52" fill="#4a90e2" opacity="0.07" filter="url(#vSoftGlow)">
+          <animate attributeName="r" values="52;60;52" dur="3.4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.07;0.14;0.07" dur="3.4s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="258" cy="210" r="42" fill="#111827" stroke="#4a90e2" stroke-width="2"/>
+        <circle cx="253" cy="206" r="12" fill="none" stroke="#4a90e2" stroke-width="2"/>
+        <line x1="262" y1="215" x2="272" y2="225" stroke="#4a90e2" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="253" cy="206" r="4" fill="#4a90e2" opacity="0.3"/>
+        <circle cx="258" cy="210" r="4" fill="#4a90e2" opacity="0.9">
+          <animate attributeName="r" values="4;7;4" dur="2.1s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.9;0.3;0.9" dur="2.1s" repeatCount="indefinite"/>
+        </circle>
+        <text x="258" y="268" fill="#4a90e2" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">DISCOVERY</text>
+        <text x="258" y="283" fill="#8b9ab5" font-family="sans-serif" font-size="9.5" text-anchor="middle">Diagnose &amp; Assess</text>
+        <text x="258" y="160" fill="#4a90e2" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle" opacity="0.6">02</text>
+
+        <!-- Arrow 2→3 -->
+        <line x1="306" y1="210" x2="368" y2="210" stroke="#4a90e2" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrowB)">
+          <animate attributeName="stroke-dashoffset" values="0;-16" dur="0.8s" repeatCount="indefinite"/>
+        </line>
+
+        <!-- STEP 3: Tool Mapping -->
+        <circle cx="416" cy="210" r="52" fill="#38bdf8" opacity="0.07" filter="url(#vSoftGlow)">
+          <animate attributeName="r" values="52;60;52" dur="2.8s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.07;0.14;0.07" dur="2.8s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="416" cy="210" r="42" fill="#111827" stroke="#3b82f6" stroke-width="2"/>
+        <circle cx="416" cy="208" r="13" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="4,2">
+          <animateTransform attributeName="transform" type="rotate" from="0 416 208" to="360 416 208" dur="8s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="416" cy="208" r="5" fill="#38bdf8" opacity="0.25"/>
+        <circle cx="416" cy="210" r="4" fill="#7dd3fc" opacity="0.9">
+          <animate attributeName="r" values="4;6;4" dur="2.4s" repeatCount="indefinite"/>
+        </circle>
+        <text x="416" y="268" fill="#38bdf8" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">MAPPING</text>
+        <text x="416" y="283" fill="#8b9ab5" font-family="sans-serif" font-size="9.5" text-anchor="middle">Right Solutions</text>
+        <text x="416" y="160" fill="#38bdf8" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle" opacity="0.6">03</text>
+
+        <!-- Arrow 3→4 -->
+        <line x1="464" y1="210" x2="526" y2="210" stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrowO)">
+          <animate attributeName="stroke-dashoffset" values="0;-16" dur="0.8s" repeatCount="indefinite"/>
+        </line>
+
+        <!-- STEP 4: Build & Deploy -->
+        <circle cx="574" cy="210" r="52" fill="#4a90e2" opacity="0.07" filter="url(#vSoftGlow)">
+          <animate attributeName="r" values="52;60;52" dur="3.6s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.07;0.14;0.07" dur="3.6s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="574" cy="210" r="42" fill="#111827" stroke="#4a90e2" stroke-width="2"/>
+        <text x="574" y="216" fill="#4a90e2" font-family="monospace" font-size="20" font-weight="700" text-anchor="middle">&lt;/&gt;</text>
+        <circle cx="574" cy="210" r="4" fill="#4a90e2" opacity="0.9">
+          <animate attributeName="r" values="4;7;4" dur="1.9s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.9s" repeatCount="indefinite"/>
+        </circle>
+        <text x="574" y="268" fill="#4a90e2" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">BUILD &amp; DEPLOY</text>
+        <text x="574" y="283" fill="#8b9ab5" font-family="sans-serif" font-size="9.5" text-anchor="middle">Implement &amp; Automate</text>
+        <text x="574" y="160" fill="#4a90e2" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle" opacity="0.6">04</text>
+
+        <!-- Arrow 4→5 -->
+        <line x1="622" y1="210" x2="680" y2="210" stroke="#10b981" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrowG)">
+          <animate attributeName="stroke-dashoffset" values="0;-16" dur="0.8s" repeatCount="indefinite"/>
+        </line>
+
+        <!-- STEP 5: Growth & Resilience -->
+        <circle cx="732" cy="210" r="58" fill="#10b981" opacity="0.09" filter="url(#vSoftGlow)">
+          <animate attributeName="r" values="58;68;58" dur="2.6s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.09;0.17;0.09" dur="2.6s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="732" cy="210" r="46" fill="#111827" stroke="#10b981" stroke-width="2.5"/>
+        <polyline points="712,224 722,214 732,218 748,200 758,204" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="758" y1="204" x2="758" y2="196" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+        <polygon points="754,200 758,194 762,200" fill="#10b981"/>
+        <rect x="712" y="216" width="6" height="12" rx="1" fill="#10b981" opacity="0.3"/>
+        <rect x="722" y="206" width="6" height="22" rx="1" fill="#10b981" opacity="0.3"/>
+        <rect x="732" y="212" width="6" height="16" rx="1" fill="#10b981" opacity="0.3"/>
+        <rect x="742" y="196" width="6" height="32" rx="1" fill="#10b981" opacity="0.5"/>
+        <line x1="710" y1="228" x2="762" y2="228" stroke="#10b981" stroke-width="1" opacity="0.4"/>
+        <circle cx="732" cy="210" r="5" fill="#10b981" opacity="0.9">
+          <animate attributeName="r" values="5;9;5" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.9;0.2;0.9" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <text x="732" y="270" fill="#10b981" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">GROWTH &amp; RESILIENCE</text>
+        <text x="732" y="285" fill="#8b9ab5" font-family="sans-serif" font-size="9.5" text-anchor="middle">Innovation that Lasts</text>
+        <text x="732" y="158" fill="#10b981" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle" opacity="0.6">05</text>
+
+        <!-- Data particles flowing forward -->
+        <circle r="3" fill="#38bdf8" opacity="0">
+          <animateMotion dur="3.5s" repeatCount="indefinite" path="M100,170 Q258,150 416,170 Q574,190 732,170"/>
+          <animate attributeName="opacity" values="0;1;1;1;0" dur="3.5s" repeatCount="indefinite"/>
+        </circle>
+        <circle r="2.5" fill="#4a90e2" opacity="0">
+          <animateMotion dur="3.5s" begin="1.2s" repeatCount="indefinite" path="M100,170 Q258,150 416,170 Q574,190 732,170"/>
+          <animate attributeName="opacity" values="0;1;1;1;0" dur="3.5s" begin="1.2s" repeatCount="indefinite"/>
+        </circle>
+        <circle r="2" fill="#10b981" opacity="0">
+          <animateMotion dur="3.5s" begin="2.4s" repeatCount="indefinite" path="M100,170 Q258,150 416,170 Q574,190 732,170"/>
+          <animate attributeName="opacity" values="0;1;1;1;0" dur="3.5s" begin="2.4s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Return loop path -->
+        <path d="M732,258 Q732,315 416,315 Q100,315 100,258" fill="none" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4,4" opacity="0.2">
+          <animate attributeName="stroke-dashoffset" values="0;-32" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <circle r="3" fill="#7dd3fc" opacity="0">
+          <animateMotion dur="4s" repeatCount="indefinite" path="M732,258 Q732,315 416,315 Q100,315 100,258"/>
+          <animate attributeName="opacity" values="0;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
+        </circle>
+        <text x="416" y="335" fill="#38bdf8" font-family="sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Continuous improvement &amp; support loop</text>
+
+        <!-- Title bar -->
+        <rect x="0" y="0" width="860" height="36" fill="#060c18" rx="16"/>
+        <rect x="0" y="16" width="860" height="20" fill="#060c18"/>
+        <circle cx="20" cy="18" r="5" fill="#ef4444" opacity="0.8"/>
+        <circle cx="36" cy="18" r="5" fill="#f59e0b" opacity="0.8"/>
+        <circle cx="52" cy="18" r="5" fill="#10b981" opacity="0.8"/>
+        <text x="430" y="23" fill="#8b9ab5" font-family="sans-serif" font-size="10" text-anchor="middle">KaneIntel — Partner Journey</text>
+      </svg>
+
+      <!-- Step pills -->
+      <div class="why-video-steps">
+        <div class="vstep"><span class="vdot" style="background:#f97316;"></span>Your Business</div>
+        <div class="vstep"><span class="vdot" style="background:#4a90e2;"></span>Discovery</div>
+        <div class="vstep"><span class="vdot" style="background:#f97316;"></span>Mapping</div>
+        <div class="vstep"><span class="vdot" style="background:#4a90e2;"></span>Build &amp; Deploy</div>
+        <div class="vstep"><span class="vdot" style="background:#10b981;"></span>Growth &amp; Resilience</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+<section id="testimonials">
+  <div class="reveal">
+    <span class="section-label">Client Stories</span>
+    <h2 class="section-heading">What Our Clients Say</h2>
+    <p class="section-sub">Real results, real businesses. Hear from the teams we've helped grow.</p>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>"KaneIntel's design and services have completely revamped our website making our processes more efficient. We will look to further work with them on AI solutions in the near future."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">AM</div>
+        <div class="author-info">
+          <strong>Aty Malik</strong>
+          <span>SouthWest Cars</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>"The Chakra Circle and design really commemorates the life coaching service I'm offering my clients. Beautiful design, great service."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">NN</div>
+        <div class="author-info">
+          <strong>Neeta Nankani</strong>
+          <span>Rise Beyond Change</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>"Website is magnificent, really expands on what my business and personality represents. Definitely recommend working with KaneIntel."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">BK</div>
+        <div class="author-info">
+          <strong>Beth Kirby</strong>
+          <span>BK Organises For You</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>"The KaneIntel team have revamped my website and made it so user friendly and crisp for the user to easily order. Can't wait for the upcoming app build."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">AA</div>
+        <div class="author-info">
+          <strong>Adam Akbar</strong>
+          <span>Nomad Stop</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>"Outstanding design, good layout of all our services, site was delivered swiftly. Look forward to continuing our work with the KaneIntel team."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">SP</div>
+        <div class="author-info">
+          <strong>SafePulse Team</strong>
+          <span>SafePulse Training</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>"As a wellness coach, it is very difficult to capture the insights me and my team offer. KaneIntel have done a tremendous job bringing my services to life."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">PS</div>
+        <div class="author-info">
+          <strong>Paul Scates</strong>
+          <span>Wellness Coach</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section-alt">
+  <div class="reveal">
+    <span class="section-label">Get In Touch</span>
+    <h2 class="section-heading">Ready to Unlock Growth?</h2>
+    <p class="section-sub nowrap" style="max-width:100%;">Schedule a free 1-hour consultation. We'll explore your goals, challenges, and map out a strategy built specifically for your business.</p>
+  </div>
+
+  <div class="contact-wrap">
+    <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="John Smith" required/>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="john@company.com" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="company">Company (optional)</label>
+        <input type="text" id="company" placeholder="Your Company Ltd."/>
+      </div>
+      <div class="form-group">
+        <label for="service">Service of Interest</label>
+        <select id="service">
+          <option value="">Select a service...</option>
+          <option>Web & App Development</option>
+          <option>Workflow Automation</option>
+          <option>AI Copilots & Assistants</option>
+          <option>Copywriting</option>
+          <option>Data Analytics</option>
+          <option>Cybersecurity</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Tell Us About Your Project</label>
+        <textarea id="message" placeholder="Describe your goals, challenges, or anything you'd like us to know..."></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="border:none;cursor:pointer;font-family:inherit;">
+        Send Message →
+      </button>
+    </form>
+
+    <div class="contact-info reveal">
+      <div class="contact-item">
+        <div class="contact-item-icon">📧</div>
+        <div>
+          <h4>Email Us</h4>
+          <p><a href="mailto:info@kaneintel.com" style="color:var(--accent);text-decoration:none;">info@kaneintel.com</a><br/>We reply within 24 hours.</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">🕐</div>
+        <div>
+          <h4>Free Consultation</h4>
+          <p>Book a 1-hour strategy call at no cost. Explore your goals with our experts.</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">🌍</div>
+        <div>
+          <h4>US Based, Global Reach</h4>
+          <p>Headquartered in the US. We work with clients across Africa and beyond.</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">⚡</div>
+        <div>
+          <h4>Fast Delivery</h4>
+          <p>We move quickly without cutting corners. Projects start within days of kick-off.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEGAL SECTIONS -->
+<section id="terms" style="padding:5rem 5% 3rem; background:var(--bg);">
+  <span class="section-label">Legal</span>
+  <h2 class="section-heading" style="margin-bottom:1rem;">Terms of Use</h2>
+  <p style="color:var(--text-muted);max-width:700px;line-height:1.8;font-size:0.95rem;">
+    By using KaneIntel's website and services, you agree to these terms. Our services are provided "as is" and we reserve the right to modify or discontinue services at any time. All intellectual property remains the property of KaneIntel. You may not reproduce, duplicate, or exploit any portion of our services without express written permission. For full terms, please contact us at <a href="mailto:info@kaneintel.com" style="color:var(--accent);">info@kaneintel.com</a>.
+  </p>
+</section>
+
+<section id="privacy" style="padding:3rem 5%; background:var(--section-alt);">
+  <span class="section-label">Legal</span>
+  <h2 class="section-heading" style="margin-bottom:1rem;">Privacy Policy</h2>
+  <p style="color:var(--text-muted);max-width:700px;line-height:1.8;font-size:0.95rem;">
+    KaneIntel is committed to protecting your personal data. We collect only the information necessary to provide our services and will never sell your data to third parties. Data is stored securely and in compliance with applicable data protection regulations. You have the right to access, rectify, or delete your personal data at any time by contacting us at <a href="mailto:info@kaneintel.com" style="color:var(--accent);">info@kaneintel.com</a>.
+  </p>
+</section>
+
+<section id="cookies" style="padding:3rem 5% 5rem; background:var(--bg);">
+  <span class="section-label">Legal</span>
+  <h2 class="section-heading" style="margin-bottom:1rem;">Cookie Policy</h2>
+  <p style="color:var(--text-muted);max-width:700px;line-height:1.8;font-size:0.95rem;">
+    KaneIntel uses cookies to enhance your browsing experience, analyse site traffic, and personalise content. Essential cookies are required for the site to function. Analytics and preference cookies can be disabled via your browser settings. By continuing to use our site you consent to our use of cookies. For more information, contact us at <a href="mailto:info@kaneintel.com" style="color:var(--accent);">info@kaneintel.com</a>.
+  </p>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <a class="footer-logo" href="javascript:void(0)" data-target="hero">
+        <div class="logo-mark" style="width:40px;height:40px;">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:40px;height:40px;">
+            <defs>
+              <linearGradient id="iGradF" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#f5a623"/>
+                <stop offset="100%" stop-color="#e07b00"/>
+              </linearGradient>
+              <linearGradient id="kBlueF" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%"   stop-color="#4a90e2"/>
+                <stop offset="100%" stop-color="#1e5bbf"/>
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="48" fill="#0d1b2e" opacity="0.5"/>
+            <!-- K white stem -->
+            <rect x="14" y="15" width="14" height="70" rx="2" fill="white"/>
+            <!-- K upper blue arm -->
+            <polygon points="28,50 68,15 80,15 40,50" fill="url(#kBlueF)"/>
+            <!-- K lower blue arm -->
+            <polygon points="28,50 68,85 80,85 40,50" fill="url(#kBlueF)"/>
+            <!-- i orange body -->
+            <rect x="62" y="28" width="14" height="52" rx="4" fill="url(#iGradF)"/>
+            <!-- i pointed bottom -->
+            <polygon points="62,76 76,76 69,88" fill="#e07b00"/>
+            <!-- i orange dot -->
+            <circle cx="69" cy="18" r="8" fill="#4a90e2"/>
+            <!-- colon blue dot -->
+            <circle cx="56" cy="38" r="3" fill="#4a90e2"/>
+            <!-- colon orange dot -->
+            <circle cx="56" cy="54" r="3" fill="#e07b00"/>
+          </svg>
+        </div>
+        <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:white;letter-spacing:-0.01em;">Kane<span style="color:#4a90e2;">Intel</span></span>
+      </a>
+      <p class="footer-desc">Unleash Growth Through AI, Automation, And Human Excellence.</p>
+      <div class="footer-social">
+        <a class="social-btn" href="https://medium.com/" target="_blank" title="Medium">M</a>
+        <a class="social-btn" href="https://www.linkedin.com/" target="_blank" title="LinkedIn">in</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h5>Quick Links</h5>
+      <ul class="footer-links">
+        <li><a href="javascript:void(0)" data-target="services">Services</a></li>
+        <li><a href="javascript:void(0)" data-target="projects">Projects</a></li>
+        <li><a href="javascript:void(0)" data-target="why-us">Why Us</a></li>
+        <li><a href="javascript:void(0)" data-target="testimonials">Testimonials</a></li>
+        <li><a href="javascript:void(0)" data-target="contact">Get Started</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <ul class="footer-links">
+        <li><a href="javascript:void(0)" data-target="terms">Terms of Use</a></li>
+        <li><a href="javascript:void(0)" data-target="privacy">Privacy Policy</a></li>
+        <li><a href="javascript:void(0)" data-target="cookies">Cookie Policy</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2025 KaneIntel. All Rights Reserved.</span>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="javascript:void(0)" data-target="terms">Terms of Use</a>
+      <a href="javascript:void(0)" data-target="privacy">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE MENU -->
+<div class="mobile-overlay" id="mobileOverlay">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <ul class="mobile-links">
+    <li><a href="javascript:void(0)" data-target="services" class="mobile-link">Services</a></li>
+    <li><a href="javascript:void(0)" data-target="projects" class="mobile-link">Projects</a></li>
+    <li><a href="javascript:void(0)" data-target="why-us" class="mobile-link">Why Us</a></li>
+    <li><a href="javascript:void(0)" data-target="testimonials" class="mobile-link">Testimonials</a></li>
+    <li><a href="javascript:void(0)" data-target="contact" class="mobile-link">Get Started</a></li>
+    <li><a href="javascript:void(0)" data-target="terms" class="mobile-link">Terms</a></li>
+    <li><a href="javascript:void(0)" data-target="privacy" class="mobile-link">Privacy</a></li>
+    <li><a href="javascript:void(0)" data-target="cookies" class="mobile-link">Cookies</a></li>
+  </ul>
+</div>
+
+<script>
+// Form handler — sends to mkane@kaneintel.com via Formspree
+async function handleSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('button[type="submit"]');
+
+  const name    = document.getElementById('name').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const company = document.getElementById('company').value.trim();
+  const service = document.getElementById('service').value.trim();
+  const message = document.getElementById('message').value.trim();
+
+  if (!name || !email || !message) {
+    btn.textContent = '⚠ Please fill required fields';
+    btn.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.style.background = '';
+    }, 3000);
+    return;
+  }
+
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  btn.style.opacity = '0.75';
+
+  try {
+    const res = await fetch('https://formspree.io/f/mkane@kaneintel.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _replyto: email,
+        _subject: 'KaneIntel Enquiry — ' + (service || 'General') + ' — ' + name,
+        name,
+        email,
+        company: company || 'N/A',
+        service: service || 'N/A',
+        message
+      })
+    });
+
+    if (res.ok) {
+      btn.textContent = '✓ Message Sent!';
+      btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+      btn.style.opacity = '1';
+      form.reset();
+    } else {
+      throw new Error('Server error');
+    }
+  } catch (err) {
+    // Fallback: open mail client
+    const subject = encodeURIComponent('KaneIntel Enquiry — ' + (service || 'General') + ' — ' + name);
+    const body = encodeURIComponent(
+      'Name: ' + name + '\nEmail: ' + email +
+      '\nCompany: ' + (company || 'N/A') +
+      '\nService: ' + (service || 'N/A') +
+      '\n\nMessage:\n' + message
+    );
+    window.location.href = 'mailto:mkane@kaneintel.com?subject=' + subject + '&body=' + body;
+    btn.textContent = '✓ Opening Mail Client…';
+    btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+    btn.style.opacity = '1';
+    form.reset();
+  }
+
+  setTimeout(() => {
+    btn.textContent = 'Send Message →';
+    btn.style.background = '';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  }, 4000);
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // THEME TOGGLE
+  const html = document.documentElement;
+  const darkBtn = document.getElementById('darkBtn');
+  const lightBtn = document.getElementById('lightBtn');
+
+  const savedTheme = localStorage.getItem('sw-theme') || 'dark';
+  html.setAttribute('data-theme', savedTheme);
+
+  function setTheme(theme) {
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('sw-theme', theme);
+  }
+
+  darkBtn.addEventListener('click', () => setTheme('dark'));
+  lightBtn.addEventListener('click', () => setTheme('light'));
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // MOBILE MENU
+  const hamburger = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobileOverlay');
+  const closeBtn = document.getElementById('mobileClose');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+
+  hamburger.addEventListener('click', () => overlay.classList.add('open'));
+  closeBtn.addEventListener('click', () => overlay.classList.remove('open'));
+  mobileLinks.forEach(link => link.addEventListener('click', () => overlay.classList.remove('open')));
+
+
+  // SMOOTH SCROLL — works inside sandboxed iframes
+  document.addEventListener('click', function(e) {
+    var el = e.target.closest('[data-target]');
+    if (!el) return;
+    e.preventDefault();
+    var id = el.getAttribute('data-target');
+    var target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+
+}); // end DOMContentLoaded
+</script>
+
+</body>
+</html>
